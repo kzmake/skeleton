@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-config
+---
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: common-dapr-config
+spec:
+  features:
+    - name: proxy.grpc
+      enabled: true

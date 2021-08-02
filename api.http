@@ -1,0 +1,6 @@
+POST http://localhost:58080/hello HTTP/2.0
+Content-Type: application/json
+
+{
+  "name": "alice"
+}

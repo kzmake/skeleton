@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    command: "sh -c 'trap : SIGTERM SIGINT; sleep infinity & wait'"
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_TLS_VERIFY: 1
+      DOCKER_CERT_PATH: /certs/client
+    volumes:
+      - .:/app
+      - docker-certs-client:/certs/client
+      - kube-config:/kube
+    network_mode: service:docker
+
+  docker:
+    image: docker:20-dind
+    privileged: true
+    volumes:
+      - docker-data:/var/lib/docker
+      - docker-certs-client:/certs/client
+
+volumes:
+  docker-data:
+  docker-certs-client:
+  kube-config:

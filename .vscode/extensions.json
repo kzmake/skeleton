@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "golang.go",
+    "shardulm94.trailing-spaces",
+    "zxh404.vscode-proto3",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "humao.rest-client",
+    "ms-vscode-remote.vscode-remote-extensionpack"
+  ]
+}

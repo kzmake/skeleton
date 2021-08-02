@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeter
+spec:
+  selector:
+    matchLabels:
+      app: greeter
+  template:
+    metadata:
+      labels:
+        app: greeter
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "greeter"
+        dapr.io/app-protocol: "grpc"
+        dapr.io/app-port: "5050"
+        dapr.io/log-as-json: "true"
+        dapr.io/log-level: "error"
+        dapr.io/config: "common-dapr-config"
+    spec:
+      containers:
+        - name: greeter
+          image: kzmake/greeter:latest
+          command:
+            - /app
+          envFrom:
+            - configMapRef:
+                name: common-config
+            - configMapRef:
+                name: greeter-config
+              prefix: GREETER_
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 32Mi
+          ports:
+            - name: grpc
+              containerPort: 5050
+          livenessProbe:
+            tcpSocket: { port: 5050 }
+            initialDelaySeconds: 10
+          readinessProbe:
+            tcpSocket: { port: 5050 }
+            initialDelaySeconds: 5
+            failureThreshold: 1
+            periodSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: greeter
+spec:
+  type: ClusterIP
+  selector:
+    app: greeter
+  ports:
+    - name: grpc
+      port: 5050
+      targetPort: 5050
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: greeter-config
+data:
+  ADDRESS: 0.0.0.0:5050

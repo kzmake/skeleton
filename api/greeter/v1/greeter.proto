@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package skeleton.greeter.v1;
+option go_package = "github.com/kzmake/skeleton/api/greeter/v1;greeter";
+
+import "google/api/annotations.proto";
+
+service Greeter {
+  rpc Hello(HelloRequest) returns (HelloResponse) {
+    option (google.api.http) = {
+      post: "/hello"
+      body: "*"
+    };
+  }
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string msg = 1;
+}
