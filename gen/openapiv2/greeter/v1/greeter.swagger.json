@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/hello": {
+    "/greeter/hello": {
       "post": {
         "operationId": "Greeter_Hello",
         "responses": {

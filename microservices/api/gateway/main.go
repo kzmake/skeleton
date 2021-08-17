@@ -26,7 +26,7 @@ import (
 type Env struct {
 	Address string `default:"0.0.0.0:8080"`
 	Dapr    struct {
-		Address string `default:"localhost:50051"`
+		Address string `default:"localhost:50001"`
 	}
 }
 
@@ -45,18 +45,6 @@ func init() {
 }
 
 func newGatewayServer(ctx context.Context) (*http.Server, error) {
-	greeterMux := runtime.NewServeMux(
-		runtime.WithMetadata(func(_ context.Context, _ *http.Request) metadata.MD {
-			return metadata.Pairs("dapr-app-id", "svc-greeter")
-		}),
-	)
-
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-
-	if err := pb.RegisterGreeterHandlerFromEndpoint(ctx, greeterMux, env.Dapr.Address, opts); err != nil {
-		return nil, xerrors.Errorf("Failed to register handler: %w", err)
-	}
-
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 
@@ -76,7 +64,15 @@ func newGatewayServer(ctx context.Context) (*http.Server, error) {
 	))
 	r.Use(gin.Recovery())
 
-	r.Any("/*any", gin.WrapH(greeterMux))
+	greeterMux := runtime.NewServeMux(
+		runtime.WithMetadata(func(_ context.Context, _ *http.Request) metadata.MD {
+			return metadata.Pairs("dapr-app-id", "svc-greeter")
+		}),
+	)
+	if err := pb.RegisterGreeterHandlerFromEndpoint(ctx, greeterMux, env.Dapr.Address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
+		return nil, xerrors.Errorf("Failed to register handler: %w", err)
+	}
+	r.Group("/greeter").Any("/*any", gin.WrapH(greeterMux))
 
 	return &http.Server{Addr: env.Address, Handler: r}, nil
 }

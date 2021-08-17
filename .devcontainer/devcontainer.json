@@ -12,7 +12,6 @@
       "zsh": { "path": "zsh", "args": ["-l"] },
       "fish": { "path": "fish", "args": ["-l"] }
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "go.toolsManagement.checkForUpdates": "local",
     "go.useLanguageServer": true,
     "go.gopath": "/go",

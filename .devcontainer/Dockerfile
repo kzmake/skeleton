@@ -47,8 +47,8 @@ ARG DAPR_VERSION=1.3.0
 RUN curl -sS https://raw.githubusercontent.com/dapr/cli/master/install/install.sh | /bin/bash -s ${DAPR_VERSION}
 
 # install tools
-COPY Makefile /tmp/Makefile
-RUN cd /tmp && make install
+COPY .devcontainer/Makefile /tmp/Makefile
+RUN make -f /tmp/Makefile install
 RUN chmod -R a+w /go/pkg
 
 USER $USER_UID
