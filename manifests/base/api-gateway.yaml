@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: api-gateway
 spec:
   selector:
     matchLabels:
-      app: gateway
+      app: api-gateway
   template:
     metadata:
       labels:
-        app: gateway
+        app: api-gateway
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "gateway"
+        dapr.io/app-id: "api-gateway"
         dapr.io/app-protocol: "http"
         dapr.io/app-port: "8080"
         dapr.io/log-as-json: "true"
@@ -21,15 +21,15 @@ spec:
         dapr.io/config: "common-dapr-config"
     spec:
       containers:
-        - name: gateway
-          image: kzmake/gateway:latest
+        - name: api-gateway
+          image: kzmake/api-gateway:latest
           command:
             - /app
           envFrom:
             - configMapRef:
                 name: common-config
             - configMapRef:
-                name: gateway-config
+                name: api-gateway-config
               prefix: GATEWAY_
           resources:
             limits:
@@ -53,11 +53,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: api-gateway
 spec:
   type: ClusterIP
   selector:
-    app: gateway
+    app: api-gateway
   ports:
     - name: http
       port: 8080
@@ -66,7 +66,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: gateway-config
+  name: api-gateway-config
 data:
   ADDRESS: 0.0.0.0:8080
   DAPR_ADDRESS: localhost:50001

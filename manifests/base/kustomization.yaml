@@ -1,5 +1,5 @@
 ---
 resources:
   - common.yaml
-  - gateway.yaml
-  - greeter.yaml
+  - api-gateway.yaml
+  - svc-greeter.yaml

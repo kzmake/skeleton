@@ -46,7 +46,7 @@ func init() {
 
 func newGatewayServer(ctx context.Context) (*http.Server, error) {
 	greeterMux := runtime.NewServeMux(
-		runtime.WithMetadata(func(_ context.Context, _ *http.Request) metadata.MD { return metadata.Pairs("dapr-app-id", "greeter") }),
+		runtime.WithMetadata(func(_ context.Context, _ *http.Request) metadata.MD { return metadata.Pairs("dapr-app-id", "svc-greeter") }),
 	)
 
 	opts := []grpc.DialOption{grpc.WithInsecure()}

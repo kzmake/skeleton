@@ -20,7 +20,7 @@ import (
 
 	pb "github.com/kzmake/skeleton/gen/go/greeter/v1"
 
-	"github.com/kzmake/skeleton/microservices/greeter/handler"
+	"github.com/kzmake/skeleton/microservices/svc/greeter/handler"
 )
 
 type Env struct {

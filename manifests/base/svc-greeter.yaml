@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeter
+  name: svc-greeter
 spec:
   selector:
     matchLabels:
-      app: greeter
+      app: svc-greeter
   template:
     metadata:
       labels:
-        app: greeter
+        app: svc-greeter
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "greeter"
+        dapr.io/app-id: "svc-greeter"
         dapr.io/app-protocol: "grpc"
         dapr.io/app-port: "5050"
         dapr.io/log-as-json: "true"
@@ -21,15 +21,15 @@ spec:
         dapr.io/config: "common-dapr-config"
     spec:
       containers:
-        - name: greeter
-          image: kzmake/greeter:latest
+        - name: svc-greeter
+          image: kzmake/svc-greeter:latest
           command:
             - /app
           envFrom:
             - configMapRef:
                 name: common-config
             - configMapRef:
-                name: greeter-config
+                name: svc-greeter-config
               prefix: GREETER_
           resources:
             limits:
@@ -53,11 +53,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: greeter
+  name: svc-greeter
 spec:
   type: ClusterIP
   selector:
-    app: greeter
+    app: svc-greeter
   ports:
     - name: grpc
       port: 5050
@@ -66,6 +66,6 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: greeter-config
+  name: svc-greeter-config
 data:
   ADDRESS: 0.0.0.0:5050

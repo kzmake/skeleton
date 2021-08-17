@@ -24,8 +24,8 @@ PBTOOLS=\
 	github.com/fullstorydev/grpcurl/cmd/grpcurl@latest \
 
 SERVICES := \
-	microservices/gateway \
-	microservices/greeter \
+	microservices/api/gateway \
+	microservices/svc/greeter \
 
 .PHONY: all
 all: proto pre fmt lint
@@ -75,6 +75,7 @@ clean:
 
 .PHONY: dev
 dev:
+	skaffold run -f skaffold.dapr.yaml
 	skaffold dev
 
 
@@ -84,4 +85,4 @@ http:
 
 .PHONY: grpc
 grpc:
-	grpcurl -protoset <(buf build -o -) -plaintext -d '{"name": "alice"}' localhost:55050 skeleton.greeter.v1.Greeter/Hello
+	grpcurl -protoset <(buf build -o -) -plaintext -d '{"name": "alice"}' localhost:55050 skeleton.greeter.v1.Greeter/Hello || true
