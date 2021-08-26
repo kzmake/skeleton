@@ -3,5 +3,7 @@ apiVersion: skaffold/v2beta19
 kind: Config
 metadata:
 requires:
+  - configs: ["dapr"]
+    path: skaffold.dapr.yaml
   - configs: ["app"]
     path: skaffold.app.yaml
