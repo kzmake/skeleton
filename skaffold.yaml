@@ -2,6 +2,7 @@
 apiVersion: skaffold/v2beta19
 kind: Config
 metadata:
+  name: all
 requires:
   - configs: ["dapr"]
     path: skaffold.dapr.yaml

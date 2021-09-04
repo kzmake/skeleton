@@ -1,0 +1,9 @@
+---
+bases:
+  - ../../base
+
+resources:
+  - lb.yaml
+
+patchesStrategicMerge:
+  - app.yaml

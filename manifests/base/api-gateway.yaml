@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: kzmake/api-gateway:latest
+          image: ghcr.io/kzmake/skeleton/api-gateway:latest
           command:
             - /app
           envFrom:

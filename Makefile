@@ -31,6 +31,11 @@ proto:
 	buf generate
 
 
+.PHONY: build
+build:
+	skaffold build
+
+
 .PHONY: kind
 kind:
 	kind get clusters -q | grep "skeleton" || kind create cluster --config kind.yaml
@@ -41,9 +46,17 @@ clean:
 
 .PHONY: dev
 dev:
-	skaffold run -f skaffold.dapr.yaml
 	skaffold dev
 
+
+.PHONY: deploy-production
+deploy-production:
+	docker login ghcr.io
+	skaffold run -p production
+
+.PHONY: destroy-production
+destroy-production:
+	skaffold delete -p production
 
 .PHONY: http
 http:

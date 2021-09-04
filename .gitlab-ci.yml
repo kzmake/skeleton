@@ -1,0 +1,39 @@
+image: ghcr.io/kzmake/skeleton/ci:latest
+
+stages:
+  - test
+  - build
+  - deploy
+
+fmt:
+  stage: test
+  script:
+    - make pre fmt
+  after_script:
+    - git diff --exit-code
+
+lint:
+  stage: test
+  script:
+    - make lint
+
+proto:
+  stage: test
+  script:
+    - make proto pre fmt
+  after_script:
+    - git diff --exit-code
+
+build:
+  stage: build
+  services:
+    - docker:20-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    # https://gitlab.com/gitlab-org/gitlab-runner/-/issues/27384#note_497228752
+    - for i in $(seq 1 30); do docker info > /dev/null && break; echo "Waiting for docker to start"; sleep 5s; done
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+  script:
+    - make build

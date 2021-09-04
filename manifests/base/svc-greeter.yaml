@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: svc-greeter
-          image: kzmake/svc-greeter:latest
+          image: ghcr.io/kzmake/skeleton/svc-greeter:latest
           command:
             - /app
           envFrom:

@@ -35,7 +35,7 @@ RUN curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 # install skaffold
-ARG SKAFFOLD_VERSION=1.28.0
+ARG SKAFFOLD_VERSION=1.31.0
 RUN curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64 && \
     chmod +x skaffold && mv skaffold /usr/local/bin/skaffold
 

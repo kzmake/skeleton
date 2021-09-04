@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: .devcontainer/Dockerfile
     command: "sh -c 'trap : SIGTERM SIGINT; sleep infinity & wait'"
-    user: "${UID:-1000}:${GID:-1000}"
     environment:
       DOCKER_HOST: tcp://docker:2376
       DOCKER_TLS_VERIFY: 1

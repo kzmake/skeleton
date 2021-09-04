@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.191.0/containers/docker-in-docker
 {
   "name": "Docker in Docker",
-  "dockerComposeFile": ["../docker-compose.yml"],
+  "dockerComposeFile": ["../docker-compose.devcontainer.yml"],
   "service": "dev",
   "workspaceFolder": "/app",
   // Set *default* container specific settings.json values on container create.

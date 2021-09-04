@@ -5,6 +5,7 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "go.useLanguageServer": true,
   "go.formatTool": "goimports",
   "go.lintTool": "golangci-lint"
 }

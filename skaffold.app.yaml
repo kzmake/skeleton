@@ -11,10 +11,10 @@ metadata:
   name: app
 build:
   artifacts:
-    - image: kzmake/api-gateway
-      docker: { dockerfile: Dockerfile.golang, buildArgs: { SERVICE_NAME: api/gateway } }
-    - image: kzmake/svc-greeter
-      docker: { dockerfile: Dockerfile.golang, buildArgs: { SERVICE_NAME: svc/greeter } }
+    - image: ghcr.io/kzmake/skeleton/api-gateway
+      docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: api/gateway } }
+    - image: ghcr.io/kzmake/skeleton/svc-greeter
+      docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: svc/greeter } }
 deploy:
   kustomize:
     paths:
@@ -30,3 +30,10 @@ portForward:
     namespace: default
     port: 5050
     localPort: 55050
+profiles:
+  - name: localhost
+  - name: production
+    deploy:
+      kustomize:
+        paths:
+          - manifests/overlays/production
