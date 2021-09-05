@@ -3,3 +3,4 @@ resources:
   - common.yaml
   - api-gateway.yaml
   - svc-greeter.yaml
+  - svc-echo.yaml

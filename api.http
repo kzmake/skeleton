@@ -1,6 +1,0 @@
-POST http://localhost:58080/greeter/hello HTTP/2.0
-Content-Type: application/json
-
-{
-  "name": "alice"
-}

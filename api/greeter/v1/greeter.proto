@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 service Greeter {
   rpc Hello(HelloRequest) returns (HelloResponse) {
     option (google.api.http) = {
-      post: "/greeter/hello"
+      post: "/greeter/v1/hello"
       body: "*"
     };
   }

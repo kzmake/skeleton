@@ -1,11 +1,11 @@
 ---
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v2beta22
 kind: Config
 metadata:
 requires:
   - configs: ["app"]
 ---
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v2beta22
 kind: Config
 metadata:
   name: app
@@ -15,6 +15,8 @@ build:
       docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: api/gateway } }
     - image: ghcr.io/kzmake/skeleton/svc-greeter
       docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: svc/greeter } }
+    - image: ghcr.io/kzmake/skeleton/svc-echo
+      docker: { dockerfile: Dockerfile.python, network: host, buildArgs: { SERVICE_NAME: svc/echo } }
 deploy:
   kustomize:
     paths:
@@ -30,6 +32,11 @@ portForward:
     namespace: default
     port: 5050
     localPort: 55050
+  - resourceType: service
+    resourceName: svc-echo
+    namespace: default
+    port: 5050
+    localPort: 55051
 profiles:
   - name: localhost
   - name: production

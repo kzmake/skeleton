@@ -20,7 +20,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	pb "github.com/kzmake/skeleton/gen/go/greeter/v1"
+	echopb "github.com/kzmake/skeleton/gen/go/echo/v1"
+	greeterpb "github.com/kzmake/skeleton/gen/go/greeter/v1"
 )
 
 type Env struct {
@@ -69,10 +70,20 @@ func newGatewayServer(ctx context.Context) (*http.Server, error) {
 			return metadata.Pairs("dapr-app-id", "svc-greeter")
 		}),
 	)
-	if err := pb.RegisterGreeterHandlerFromEndpoint(ctx, greeterMux, env.Dapr.Address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
+	if err := greeterpb.RegisterGreeterHandlerFromEndpoint(ctx, greeterMux, env.Dapr.Address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
 		return nil, xerrors.Errorf("Failed to register handler: %w", err)
 	}
-	r.Group("/greeter").Any("/*any", gin.WrapH(greeterMux))
+	r.Group("/greeter/v1").Any("/*any", gin.WrapH(greeterMux))
+
+	echoMux := runtime.NewServeMux(
+		runtime.WithMetadata(func(_ context.Context, _ *http.Request) metadata.MD {
+			return metadata.Pairs("dapr-app-id", "svc-echo")
+		}),
+	)
+	if err := echopb.RegisterEchoHandlerFromEndpoint(ctx, echoMux, env.Dapr.Address, []grpc.DialOption{grpc.WithInsecure()}); err != nil {
+		return nil, xerrors.Errorf("Failed to register handler: %w", err)
+	}
+	r.Group("/echo/v1").Any("/*any", gin.WrapH(echoMux))
 
 	return &http.Server{Addr: env.Address, Handler: r}, nil
 }

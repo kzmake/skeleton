@@ -1,0 +1,15 @@
+###
+POST http://localhost:58080/greeter/v1/hello HTTP/2.0
+Content-Type: application/json
+
+{
+  "name": "alice"
+}
+
+###
+POST http://localhost:58080/echo/v1/echo HTTP/2.0
+Content-Type: application/json
+
+{
+  "msg": "hoge"
+}

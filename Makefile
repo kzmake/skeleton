@@ -3,9 +3,10 @@ SHELL = /bin/bash
 SERVICES = \
 	microservices/api/gateway \
 	microservices/svc/greeter \
+	microservices/svc/echo \
 
 .PHONY: all
-all: proto pre fmt lint
+all: pre proto fmt lint
 
 .PHONY: install
 install:
@@ -14,6 +15,7 @@ install:
 
 .PHONY: pre
 pre:
+	@poetry install --no-root
 	@for f in $(SERVICES); do make -C $$f pre; done
 
 .PHONY: fmt
@@ -60,8 +62,10 @@ destroy-production:
 
 .PHONY: http
 http:
-	curl -i localhost:58080/greeter/hello -H "Content-Type: application/json" -d '{"name": "alice"}'
+	curl -i localhost:58080/greeter/v1/hello -H "Content-Type: application/json" -d '{"name": "alice"}'
+	curl -i localhost:58080/echo/v1/echo -H "Content-Type: application/json" -d '{"msg": "hoge"}'
 
 .PHONY: grpc
 grpc:
 	grpcurl -protoset <(buf build -o -) -plaintext -d '{"name": "alice"}' localhost:55050 skeleton.greeter.v1.Greeter/Hello || true
+	grpcurl -protoset <(buf build -o -) -plaintext -d '{"msg": "hoge"}' localhost:55051 skeleton.echo.v1.Echo/Echo || true

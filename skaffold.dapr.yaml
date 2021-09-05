@@ -1,11 +1,11 @@
 ---
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v2beta22
 kind: Config
 metadata:
 requires:
   - configs: ["dapr"]
 ---
-apiVersion: skaffold/v2beta19
+apiVersion: skaffold/v2beta22
 kind: Config
 metadata:
   name: dapr

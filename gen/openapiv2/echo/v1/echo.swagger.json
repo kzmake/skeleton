@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "greeter/v1/greeter.proto",
+    "title": "echo/v1/echo.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Greeter"
+      "name": "Echo"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/greeter/v1/hello": {
+    "/echo/v1/echo": {
       "post": {
-        "operationId": "Greeter_Hello",
+        "operationId": "Echo_Echo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1HelloResponse"
+              "$ref": "#/definitions/v1EchoResponse"
             }
           },
           "default": {
@@ -39,12 +39,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1HelloRequest"
+              "$ref": "#/definitions/v1EchoRequest"
             }
           }
         ],
         "tags": [
-          "Greeter"
+          "Echo"
         ]
       }
     }
@@ -80,15 +80,15 @@
         }
       }
     },
-    "v1HelloRequest": {
+    "v1EchoRequest": {
       "type": "object",
       "properties": {
-        "name": {
+        "msg": {
           "type": "string"
         }
       }
     },
-    "v1HelloResponse": {
+    "v1EchoResponse": {
       "type": "object",
       "properties": {
         "msg": {

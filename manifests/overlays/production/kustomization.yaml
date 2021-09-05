@@ -4,6 +4,3 @@ bases:
 
 resources:
   - lb.yaml
-
-patchesStrategicMerge:
-  - app.yaml

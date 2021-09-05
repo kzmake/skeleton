@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package skeleton.echo.v1;
+option go_package = "github.com/kzmake/skeleton/api/echo/v1;echo";
+
+import "google/api/annotations.proto";
+
+service Echo {
+  rpc Echo(EchoRequest) returns (EchoResponse) {
+    option (google.api.http) = {
+      post: "/echo/v1/echo"
+      body: "*"
+    };
+  }
+}
+
+message EchoRequest {
+  string msg = 1;
+}
+
+message EchoResponse {
+  string msg = 1;
+}
