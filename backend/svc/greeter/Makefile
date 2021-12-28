@@ -7,7 +7,7 @@ pre:
 
 .PHONY: fmt
 fmt:
-	goimports -l -local "github.com/kzmake/skeleton/microservices/svc/greeter" -w .
+	goimports -l -local "github.com/kzmake/skeleton/backend/svc/greeter" -w .
 
 .PHONY: lint
 lint:

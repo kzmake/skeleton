@@ -15,8 +15,8 @@
 ### マイクロサービスの追加
 
 1. `api/{{ マイクロサービス名 }}/v1` にて.protoの追加
-1. `microservices/svc/{{ マイクロサービス名 }}` にてgRPCアプリケーションの追加
-1. `Makefile` にて SERVICES 変数に `microservices/svc/{{ マイクロサービス名 }}` を設定
+1. `backend/svc/{{ マイクロサービス名 }}` にてgRPCアプリケーションの追加
+1. `Makefile` にて SERVICES 変数に `backend/svc/{{ マイクロサービス名 }}` を設定
 1. `manifests/base/svc-{{ マイクロサービス名 }}.yaml` としてマニフェストの追加
 1. `skaffold.app.yaml` にて追加したマイクロサービスのコンテナイメージのビルドを追加
 

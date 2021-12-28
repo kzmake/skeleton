@@ -18,16 +18,16 @@ import (
 	"golang.org/x/xerrors"
 	"google.golang.org/grpc"
 
-	pb "github.com/kzmake/skeleton/gen/go/greeter/v1"
+	pb "github.com/kzmake/skeleton/gen/go/echo/v1"
 
-	"github.com/kzmake/skeleton/microservices/svc/greeter/handler"
+	"github.com/kzmake/skeleton/backend/svc/echo/handler"
 )
 
 type Env struct {
 	Address string `default:"0.0.0.0:5050"`
 }
 
-const prefix = "GREETER"
+const prefix = "ECHO"
 
 var env Env
 
@@ -48,7 +48,7 @@ func newGRPCServer() *grpc.Server {
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)
-	pb.RegisterGreeterServer(s, handler.NewGreeter())
+	pb.RegisterEchoServer(s, handler.NewEcho())
 
 	return s
 }

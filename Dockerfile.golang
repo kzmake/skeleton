@@ -16,8 +16,8 @@ ARG CGO_ENABLED=0
 ARG GOOS=linux
 ARG GOARCH=amd64
 COPY gen gen
-COPY microservices/$SERVICE_NAME microservices/$SERVICE_NAME
-RUN go build -o /go/bin/app -ldflags '-s -w' microservices/$SERVICE_NAME/main.go
+COPY backend/$SERVICE_NAME backend/$SERVICE_NAME
+RUN go build -o /go/bin/app -ldflags '-s -w' backend/$SERVICE_NAME/main.go
 
 FROM scratch as runner
 
