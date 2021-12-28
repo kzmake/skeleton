@@ -15,7 +15,7 @@ deploy:
       - name: dapr
         repo: https://dapr.github.io/helm-charts
         remoteChart: dapr
-        version: "1.3"
+        version: "1.5.1"
         namespace: dapr-system
         createNamespace: true
         wait: true
