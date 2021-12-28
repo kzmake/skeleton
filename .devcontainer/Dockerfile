@@ -17,14 +17,6 @@ RUN apt-get -qq update && \
     apt-get -qq install -y protobuf-compiler && \
     rm -rf /var/lib/apt/lists/*
 
-# install python
-ARG PYTHON_VERSION=3.9.7
-RUN curl -Lo python.tgz "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz" && \
-    mkdir -p /usr/src/python && tar --extract --file python.tgz --strip-components 1 --directory /usr/src/python/ && rm python.tgz && \
-    cd /usr/src/python && ./configure --enable-optimizations && make -j 4 && make altinstall
-RUN cd /usr/local/bin && ln -fs idle3 idle && ln -fs pydoc3 pydoc && ln -fs python3.9 python && ln -fs python3.9-config python-config
-RUN curl -kL https://bootstrap.pypa.io/get-pip.py | python
-
 # install docker
 ARG DOCKER_VERSION=20.10.7
 RUN curl -Lo docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \

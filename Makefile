@@ -15,7 +15,6 @@ install:
 
 .PHONY: pre
 pre:
-	@poetry install --no-root
 	@for f in $(SERVICES); do make -C $$f pre; done
 
 .PHONY: fmt
@@ -67,5 +66,5 @@ http:
 
 .PHONY: grpc
 grpc:
-	grpcurl -protoset <(buf build -o -) -plaintext -d '{"name": "alice"}' localhost:55050 skeleton.greeter.v1.Greeter/Hello || true
-	grpcurl -protoset <(buf build -o -) -plaintext -d '{"msg": "hoge"}' localhost:55051 skeleton.echo.v1.Echo/Echo || true
+	grpcurl -protoset <(buf build -o -) -plaintext -rpc-header 'dapr-app-id: svc-greeter' -d '{"name": "alice"}' localhost:50001 skeleton.greeter.v1.Greeter/Hello || true
+	grpcurl -protoset <(buf build -o -) -plaintext -rpc-header 'dapr-app-id: svc-echo' -d '{"msg": "hoge"}' localhost:50001 skeleton.echo.v1.Echo/Echo || true

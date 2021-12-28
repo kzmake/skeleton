@@ -3,17 +3,12 @@ all: pre fmt lint
 
 .PHONY: pre
 pre:
-	poetry install --no-root
+	go mod tidy
 
 .PHONY: fmt
 fmt:
-	black .
-	isort .
+	goimports -l -local "github.com/kzmake/skeleton/microservices/svc/echo" -w .
 
 .PHONY: lint
 lint:
-	flake8
-
-.PHONY: run
-run:
-	PYTHONPATH=../../../gen/py/ python run.py
+	golangci-lint run

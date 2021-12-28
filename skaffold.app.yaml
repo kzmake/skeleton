@@ -16,7 +16,7 @@ build:
     - image: ghcr.io/kzmake/skeleton/svc-greeter
       docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: svc/greeter } }
     - image: ghcr.io/kzmake/skeleton/svc-echo
-      docker: { dockerfile: Dockerfile.python, network: host, buildArgs: { SERVICE_NAME: svc/echo } }
+      docker: { dockerfile: Dockerfile.golang, network: host, buildArgs: { SERVICE_NAME: svc/echo } }
 deploy:
   kustomize:
     paths:
@@ -28,15 +28,10 @@ portForward:
     port: 8080
     localPort: 58080
   - resourceType: service
-    resourceName: svc-greeter
+    resourceName: api-gateway-dapr
     namespace: default
-    port: 5050
-    localPort: 55050
-  - resourceType: service
-    resourceName: svc-echo
-    namespace: default
-    port: 5050
-    localPort: 55051
+    port: 50001
+    localPort: 50001
 profiles:
   - name: localhost
   - name: production

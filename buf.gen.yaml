@@ -8,15 +8,6 @@ plugins:
     out: gen/go
     opt:
       - paths=source_relative
-  - name: python
-    out: gen/py
-  - name: python_grpc
-    out: gen/py
-  - name: grpc-gateway
-    out: gen/go
-    opt:
-      - paths=source_relative
-      - logtostderr=true
   - name: openapiv2
     out: gen/openapiv2
     opt:
